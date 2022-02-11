@@ -56,9 +56,8 @@ public class FeatureNormalizer implements DataPreprocessor {
 		// take square root of variances to get standard deviations
 		for (int i = 0; i < train.getData().size(); i++) {
 			for (int j = 0; j < train.getData().get(i).getFeatureSet().size(); j++) {
-				System.out.println(featureSDs.get(j));
-				train.getData().get(i).setFeature(j,
-						train.getData().get(i).getFeature(j) / (Math.sqrt(featureSDs.get(j) / (train.getData().size() - 1))));
+				train.getData().get(i).setFeature(j, train.getData().get(i).getFeature(j)
+						/ (Math.sqrt(featureSDs.get(j) / (train.getData().size() - 1))));
 			}
 		}
 
@@ -91,7 +90,8 @@ public class FeatureNormalizer implements DataPreprocessor {
 			}
 
 			for (int i = 0; i < featureSDs.size(); i++) {
-				example.setFeature(i, Math.sqrt(featureSDs.get(i) / (test.getData().size() - 1)));
+				example.setFeature(i,
+						example.getFeature(i) / (Math.sqrt(featureSDs.get(i) / (train.getData().size() - 1))));
 			}
 		}
 

@@ -5,6 +5,7 @@ import java.util.PriorityQueue;
 
 import ml.data.DataSet;
 import ml.data.Example;
+import ml.data.ExampleNormalizer;
 import ml.data.FeatureNormalizer;
 
 /**
@@ -75,10 +76,12 @@ public class KNNClassifier implements Classifier {
 
 	public static void main(String[] args) {
 		DataSet data = new DataSet("data/titanic-train.real.csv");
-		FeatureNormalizer normalizer = new FeatureNormalizer();
+		FeatureNormalizer featureNormalizer = new FeatureNormalizer();
+		ExampleNormalizer exampleNormalizer = new ExampleNormalizer();
 
 //		System.out.println(data.getData().get(0).getFeature(0));
-		normalizer.preprocessTrain(data);
+		featureNormalizer.preprocessTrain(data);
+		exampleNormalizer.preprocessTrain(data);
 //		System.out.println(data.getData().get(0).getFeature(0));
 
 		KNNClassifier knn = new KNNClassifier();
