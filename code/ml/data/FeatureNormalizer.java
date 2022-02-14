@@ -3,16 +3,21 @@ package ml.data;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * A class used to pre-process testing and training data. This class does so by
+ * centering the mean for each feature and by dividing each feature value by its
+ * standard deviation.
+ * 
+ * 
+ * @author Aidan Garton
+ *
+ */
 public class FeatureNormalizer implements DataPreprocessor {
 	ArrayList<Double> featureMeans;
 	ArrayList<Double> featureSDs;
 	DataSet train, test;
 
 	public FeatureNormalizer() {
-	}
-
-	private void centerData() {
-
 	}
 
 	@Override
@@ -61,15 +66,7 @@ public class FeatureNormalizer implements DataPreprocessor {
 			}
 		}
 
-//		for (int i = 0; i < featureMeans.size(); i++) {
-//			System.out.println(featureMeans.get(i));
-//		}
-//
-//		for (int i = 0; i < featureMeans.size(); i++) {
-//			System.out.println(featureSDs.get(i));
-//		}
-
-		// check if mean is 0 for all features
+		// double check that mean is 0 for all features
 //		for (int i = 0; i < train.getAllFeatureIndices().size(); i++) {
 //			double m = 0;
 //			for (int j = 0; j < train.getData().size(); j++) {
@@ -77,6 +74,7 @@ public class FeatureNormalizer implements DataPreprocessor {
 //			}
 //			System.out.println("mean: " + m / train.getData().size());
 //		}
+
 	}
 
 	@Override
@@ -94,6 +92,5 @@ public class FeatureNormalizer implements DataPreprocessor {
 						example.getFeature(i) / (Math.sqrt(featureSDs.get(i) / (train.getData().size() - 1))));
 			}
 		}
-
 	}
 }

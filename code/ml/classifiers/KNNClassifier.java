@@ -9,6 +9,7 @@ import ml.data.ExampleNormalizer;
 import ml.data.FeatureNormalizer;
 
 /**
+ * A simple k-nearest neighbor binary classifier.
  * 
  * @author Aidan Garton
  *
@@ -27,13 +28,10 @@ public class KNNClassifier implements Classifier {
 
 	@Override
 	public void train(DataSet data) {
-		// do nothing?
-
-		// ok maybe just this?
 		this.data = data;
 	}
 
-	@Override
+//	@Override
 	public double classify(Example example) {
 		distances = new ArrayList<DistanceExample>(data.getData().size());
 
@@ -62,11 +60,8 @@ public class KNNClassifier implements Classifier {
 			}
 		}
 
-//		while (!distancesPQ.isEmpty()) {
-//			System.out.println(distancesPQ.remove().getDistance());
-//		}
-
 		// return majority label
+		// -1 if tie (only possible when k is even)
 		if (c0 >= c1) {
 			return -1;
 		} else {
@@ -79,15 +74,11 @@ public class KNNClassifier implements Classifier {
 		FeatureNormalizer featureNormalizer = new FeatureNormalizer();
 		ExampleNormalizer exampleNormalizer = new ExampleNormalizer();
 
-//		System.out.println(data.getData().get(0).getFeature(0));
-		featureNormalizer.preprocessTrain(data);
+//		featureNormalizer.preprocessTrain(data);
 		exampleNormalizer.preprocessTrain(data);
-//		System.out.println(data.getData().get(0).getFeature(0));
 
 		KNNClassifier knn = new KNNClassifier();
 		knn.train(data);
-
-//		double predict = knn.classify(data.getData().get(0));
 
 		PerceptronClassifier p = new PerceptronClassifier();
 		p.train(data);
@@ -96,12 +87,7 @@ public class KNNClassifier implements Classifier {
 
 		double correct = 0, total = 0;
 		for (Example e : data.getData()) {
-//			double predict = knn.classify(e);
-			double predict = ap.classify(e);
-//
-//			System.out.println(e.getLabel() + " " + predict);
-//
-//			System.out.println(e.getFeature(0));
+			double predict = knn.classify(e);
 			if (e.getLabel() == predict) {
 				correct++;
 			}
